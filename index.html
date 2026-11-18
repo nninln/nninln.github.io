@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Phạm Vĩnh Minh — undergraduate mathematics, random matrix theory, and high-dimensional statistics.">
+  <meta name="theme-color" content="#f8f7f2">
+  <title>Phạm Vĩnh Minh | Mathematics</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f8f7f2;
+      --header: #fcfbf8;
+      --surface: #fffefa;
+      --text: #182824;
+      --muted: #4d6058;
+      --line: #d4dfd6;
+      --accent: #245d48;
+      --sans: Inter, "Source Sans 3", system-ui, sans-serif;
+      --serif: "STIX Two Text", Georgia, serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--background); color: var(--text); font: 1rem/1.65 var(--sans); }
+    h1, h2, h3, p, figure, ul, dl, dd { margin: 0; }
+    h1, h2 { font-family: var(--serif); font-weight: 500; }
+    a { color: var(--accent); text-underline-offset: 4px; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    .wrap { width: min(100% - 72px, 1080px); margin-inline: auto; }
+    .skip { position: absolute; left: 12px; top: 8px; z-index: 3; padding: 6px 10px; background: var(--surface); transform: translateY(-160%); }
+    .skip:focus { transform: none; }
+    .topbar { background: var(--header); border-bottom: 1px solid var(--line); }
+    .topbar-inner { display: flex; justify-content: space-between; align-items: center; gap: 14px 25px; }
+    .site-name { color: var(--text); text-decoration: none; white-space: nowrap; font: 600 clamp(1.23rem, 2.5vw, 1.55rem)/1.2 var(--serif); }
+    nav { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0 clamp(13px, 2.25vw, 27px); }
+    nav > a, .nav-group > summary { display: flex; align-items: center; min-height: 63px; border-bottom: 2px solid transparent; color: var(--muted); font-size: .88rem; font-weight: 620; text-decoration: none; }
+    nav > a:hover, nav > a[aria-current="page"], .nav-group > summary:hover, .nav-group[open] > summary, .nav-group.is-current > summary { color: var(--accent); border-color: var(--accent); }
+    .nav-group { position: relative; }
+    .nav-group > summary { gap: 8px; cursor: pointer; list-style: none; }
+    .nav-group > summary::-webkit-details-marker { display: none; }
+    .nav-group > summary::after { content: ''; width: 6px; height: 6px; border-right: 1px solid; border-bottom: 1px solid; transform: translateY(-2px) rotate(45deg); }
+    .nav-submenu { position: absolute; z-index: 2; top: 100%; left: -12px; min-width: 145px; padding: 5px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 8px 22px #18282416; }
+    .nav-submenu a { display: block; padding: 8px 11px; color: var(--text); text-decoration: none; font-size: .88rem; border-radius: 3px; }
+    .nav-submenu a:hover, .nav-submenu a[aria-current="page"] { color: var(--accent); background: #e9f1e9; }
+    main { min-height: 68vh; }
+    .page { padding-block: clamp(36px, 5.5vw, 70px); scroll-margin-top: 12px; }
+    .page + .page { border-top: 1px solid var(--line); }
+    .page h1 { font-size: clamp(2.45rem, 5vw, 4.45rem); line-height: 1.06; letter-spacing: -.043em; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(165px, .93fr); gap: clamp(24px, 6vw, 67px); align-items: center; }
+    .portrait { width: 100%; max-width: 320px; height: auto; display: block; border: 1px solid #aab4ad; border-radius: 6px; justify-self: end; }
+    .profile-role { margin-top: 13px; color: var(--accent); font-weight: 650; font-size: clamp(.98rem, 1.4vw, 1.14rem); }
+    .intro { max-width: 62ch; margin-top: 20px; }
+    .intro p + p { margin-top: 11px; }
+    .location, .page-lead { color: var(--muted); }
+    .location { font-size: .88rem; }
+    .interests, .home-demos { margin-top: clamp(32px, 5vw, 58px); border-top: 1px solid var(--line); padding-top: clamp(20px, 3vw, 31px); }
+    .interests h2, .home-demos > h2 { font-size: clamp(1.56rem, 2.7vw, 2.15rem); line-height: 1.15; }
+    .interest-list { display: flex; flex-wrap: wrap; gap: 6px 23px; padding-left: 18px; margin-top: 9px; color: var(--muted); font-size: .95rem; }
+    .interest-list li::marker { color: var(--accent); }
+    .demo-section {
+      color-scheme: dark;
+      --accent: #b4a4f0;
+      --muted: #c7c1ce;
+      color: #f3eff7;
+      background: #1b1820;
+      border: 1px solid #403744;
+      border-radius: 12px;
+      padding: clamp(14px, 3.1vw, 28px);
+      margin-top: 17px;
+      scroll-margin-top: 18px;
+    }
+    .section-title { font-size: clamp(1.4rem, 2.5vw, 1.86rem); line-height: 1.2; margin-bottom: 15px; }
+    .demo-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; gap: 16px clamp(18px, 3.6vw, 40px); }
+    .demo-figure { min-width: 0; }
+    .demo-figure canvas { display: block; }
+    #spectrum { width: 100%; height: clamp(225px, 32vw, 305px); }
+    .demo-controls { padding-top: 5px; }
+    .regime-label { margin-bottom: 12px; font-weight: 650; font-size: .98rem; }
+    .demo-control + .demo-control { margin-top: 12px; }
+    .demo-control label { display: block; font-size: .89rem; }
+    .demo-control output { color: var(--accent); font-family: var(--mono); font-size: .84rem; }
+    input[type="range"] { width: 100%; margin: 4px 0 0; accent-color: var(--accent); cursor: pointer; }
+    .demo-note, .demo-stats { color: var(--muted); font-size: .82rem; }
+    .demo-note { max-width: 76ch; margin-top: 12px; }
+    .demo-stats { margin-top: 12px; }
+    .demo-stats span { display: block; }
+    .demo-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 6px; color: var(--muted); font-size: .75rem; }
+    .demo-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .demo-legend span::before { content: ''; width: 12px; height: 2px; background: var(--accent); }
+    .demo-legend .sample-key::before { height: 7px; background: #d4c9ee70; }
+    .ball-layout { max-width: 50rem; grid-template-columns: minmax(0, 270px) minmax(0, 1fr); }
+    .ball-figure { max-width: 270px; }
+    #ball-space { width: 100%; height: auto; aspect-ratio: 1; background: #211b2c; border-radius: 10px; }
+    .ball-figure .demo-legend span::before { width: 7px; height: 7px; border-radius: 50%; }
+    .ball-figure .ball-shell-key::before { background: #ffd098; }
+    .ball-share { margin-top: 11px; font-size: .84rem; color: var(--muted); }
+    .ball-share strong { color: #ffd098; font-weight: 650; }
+    .demo-button { margin-top: 10px; padding: 7px 12px; border: 1px solid #4b4155; border-radius: 6px; background: #2a2430; color: #f3eff7; font: .8rem var(--sans); cursor: pointer; }
+    .demo-button:hover { border-color: var(--accent); }
+    .page-lead { max-width: 66ch; margin-top: 13px; }
+    .project-note { max-width: 48rem; margin-top: 27px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: clamp(17px, 3vw, 27px); }
+    .project-note h2 { font-size: 1.5rem; line-height: 1.25; }
+    .project-note > p { margin-top: 10px; color: var(--muted); }
+    .project-data { display: flex; flex-wrap: wrap; gap: 14px 37px; padding-top: 15px; margin-top: 15px; border-top: 1px solid var(--line); }
+    .project-data dt { font-size: .82rem; color: var(--muted); }
+    .project-data dd { font-weight: 600; }
+    .resource-list { max-width: 38rem; padding: 0; margin-top: 21px; border-top: 1px solid var(--line); list-style: none; }
+    .resource-list li { border-bottom: 1px solid var(--line); }
+    .resource-list a { display: block; padding-block: 12px; }
+    .footer { padding-block: 17px 27px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+    @media (max-width: 760px) {
+      .wrap { width: calc(100% - 40px); }
+      .topbar-inner { flex-direction: column; align-items: flex-start; padding-top: 14px; gap: 4px; }
+      nav > a, .nav-group > summary { min-height: 43px; }
+      .hero { gap: 24px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: calc(100% - 32px); }
+      nav { column-gap: 12px; }
+      nav > a, .nav-group > summary { font-size: .83rem; }
+      .hero, .demo-layout { grid-template-columns: minmax(0, 1fr); }
+      .portrait { justify-self: start; width: min(62%, 235px); }
+      .demo-controls { padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="site-name" href="#home">Phạm Vĩnh Minh</a>
+      <nav aria-label="Main navigation">
+        <a href="#home" aria-current="page">Home</a>
+        <details class="nav-group" id="activities-menu">
+          <summary>Activities</summary>
+          <div class="nav-submenu">
+            <a href="#project">Project</a>
+            <a href="#blog">Blog</a>
+          </div>
+        </details>
+        <a href="#others">Others</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="page" id="home" data-page="Home" aria-labelledby="name">
+      <header class="hero">
+        <div>
+          <h1 id="name">Phạm Vĩnh Minh</h1>
+          <p class="profile-role">Mathematics undergraduate</p>
+          <div class="intro">
+            <p>I specialize in probability and statistics at the <strong>University of Science, Vietnam National University Ho Chi Minh City (VNU-HCM)</strong>.</p>
+            <p>I’m working on my undergraduate thesis in random matrix theory and high-dimensional statistics under the supervision of <strong>Dr. Nguyen Mong Ngoc</strong>.</p>
+            <p>I use <strong>R</strong> for statistical computing and data visualization.</p>
+            <p class="location">Based in Vietnam</p>
+          </div>
+        </div>
+        <img class="portrait" src="./pham-vinh-minh-portrait.jpg" width="800" height="700" alt="Portrait of Phạm Vĩnh Minh">
+      </header>
+
+      <section class="interests" aria-labelledby="interests-title">
+        <h2 id="interests-title">Research interests</h2>
+        <ul class="interest-list">
+          <li>Random matrix theory</li>
+          <li>High-dimensional statistics</li>
+          <li>Statistical machine learning</li>
+        </ul>
+      </section>
+
+      <section class="home-demos" aria-labelledby="simulations-title">
+        <h2 id="simulations-title">Interactive simulations</h2>
+        <section class="demo-section" id="marchenko-pastur" aria-labelledby="chart-title">
+          <h3 class="section-title" id="chart-title">Marchenko–Pastur law</h3>
+          <div class="demo-layout">
+            <figure class="demo-figure">
+              <canvas id="spectrum" width="540" height="330" role="img" aria-label="Marchenko–Pastur density and simulated eigenvalue histogram."></canvas>
+              <figcaption class="demo-legend">
+                <span>Marchenko–Pastur density</span>
+                <span class="sample-key">Simulated eigenvalues</span>
+              </figcaption>
+            </figure>
+            <div class="demo-controls">
+              <p class="regime-label">High-dimensional statistics</p>
+              <div class="demo-control">
+                <label for="mp-size">Sample size <var>n</var> = <output id="mp-size-value" for="mp-size">400</output></label>
+                <input type="range" id="mp-size" min="20" max="2000" step="20" value="400">
+              </div>
+              <div class="demo-control">
+                <label for="ratio">Aspect ratio <var>γ</var> = <var>p/n</var> = <output id="ratio-value" for="ratio">0.50</output></label>
+                <input type="range" id="ratio" min="0.10" max="10" step="0.05" value="0.50">
+              </div>
+              <p class="demo-stats">
+                <span id="mp-parameters">Dimension p = 200</span>
+                <span id="support">Continuous support [0.09, 2.91]</span>
+                <span id="mp-zero">Zero eigenvalues 0/200 (0.0%)</span>
+              </p>
+              <p class="demo-note" id="clip-note" hidden></p>
+            </div>
+          </div>
+          <p class="demo-note">The sample is drawn from the spectrum of <var>XX</var><sup>⊤</sup>/<var>n</var> with independent standard Gaussian entries in <var>X</var>. At fixed <var>γ</var>, raising <var>n</var> also raises <var>p</var>. Exact zeros are reported separately.</p>
+          <noscript><p class="demo-note">Enable JavaScript to run the simulation.</p></noscript>
+        </section>
+
+        <section class="demo-section" id="ball-shell" aria-labelledby="ball-title">
+          <h3 class="section-title" id="ball-title">Where does the volume of a high-dimensional ball lie?</h3>
+          <div class="demo-layout ball-layout">
+            <figure class="demo-figure ball-figure">
+              <canvas id="ball-space" width="315" height="315" role="img" aria-label="Radial view of points in a two-dimensional ball."></canvas>
+              <figcaption class="demo-legend">
+                <span>Inner ball</span>
+                <span class="ball-shell-key">Outer shell</span>
+              </figcaption>
+            </figure>
+            <div class="demo-controls">
+              <div class="demo-control">
+                <label for="ball-dimension">Dimension <var>d</var> = <output id="ball-dimension-value" for="ball-dimension">2</output></label>
+                <input type="range" id="ball-dimension" min="1" max="200" step="1" value="2">
+              </div>
+              <div class="demo-control">
+                <label for="ball-thickness">Shell thickness <var>ε</var> = <output id="ball-thickness-value" for="ball-thickness">5%</output></label>
+                <input type="range" id="ball-thickness" min="1" max="30" step="1" value="5" aria-valuetext="5 percent">
+              </div>
+              <p class="ball-share"><strong id="ball-space-share">9.8%</strong> of volume in the shell</p>
+              <button type="button" class="demo-button" id="ball-resample">Redraw points</button>
+              <p class="demo-note">Raise <var>d</var> to see points gather near the surface. Each dot preserves its sampled distance from the center. The angles are illustrative.</p>
+            </div>
+          </div>
+          <noscript><p class="demo-note">Enable JavaScript to run the simulation.</p></noscript>
+        </section>
+      </section>
+    </section>
+
+    <section class="page" id="project" data-page="Project" aria-labelledby="project-title">
+      <h1 id="project-title">Project</h1>
+      <article class="project-note">
+        <h2>Limiting spectral distributions of random inner-product kernel matrices in high dimensions</h2>
+        <p>Undergraduate thesis · In progress</p>
+        <dl class="project-data">
+          <div><dt>Supervisor</dt><dd>Dr. Nguyen Mong Ngoc</dd></div>
+          <div><dt>Research area</dt><dd>Random matrix theory</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="page" id="blog" data-page="Blog" aria-labelledby="blog-title">
+      <h1 id="blog-title">Blog</h1>
+      <p class="page-lead">Plane geometry lessons for the NQD mathematics team.</p>
+      <!-- Add lesson articles here. -->
+    </section>
+
+    <section class="page" id="others" data-page="Others" aria-labelledby="others-title">
+      <h1 id="others-title">Others</h1>
+      <ul class="resource-list">
+        <li><a href="https://github.com/nninln">GitHub profile</a></li>
+        <li><a href="https://github.com/nninln/nninln.github.io">Website source code</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <p>Phạm Vĩnh Minh</p>
+  </footer>
+
+  <script>
+    const academicPages = [...document.querySelectorAll('[data-page]')];
+    const academicNav = [...document.querySelectorAll('nav a[href^="#"]')];
+    const academicHome = document.querySelector('#home');
+    const activitiesMenu = document.querySelector('#activities-menu');
+    let academicPage = academicHome;
+
+    function routeAcademicPage() {
+      const anchor = document.getElementById(location.hash.slice(1));
+      const nextPage = anchor?.closest('[data-page]') || (anchor?.id === 'main' ? academicPage : academicHome);
+      academicPage = nextPage;
+      for (const page of academicPages) page.hidden = page !== nextPage;
+      for (const link of academicNav) {
+        if (link.getAttribute('href') === '#' + nextPage.id) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      }
+      activitiesMenu.classList.toggle('is-current', nextPage.id === 'project' || nextPage.id === 'blog');
+      activitiesMenu.open = false;
+      document.title = nextPage === academicHome ? 'Phạm Vĩnh Minh | Mathematics' : nextPage.dataset.page + ' | Phạm Vĩnh Minh';
+      if (anchor && anchor !== nextPage) {
+        requestAnimationFrame(() => anchor.scrollIntoView({ block: 'start' }));
+      } else if (location.hash) {
+        window.scrollTo(0, 0);
+      }
+    }
+
+    document.addEventListener('click', event => {
+      if (activitiesMenu.open && (!activitiesMenu.contains(event.target) || event.target.closest('.nav-submenu a'))) {
+        activitiesMenu.open = false;
+      }
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && activitiesMenu.open) {
+        activitiesMenu.open = false;
+        activitiesMenu.querySelector('summary').focus();
+      }
+    });
+    window.addEventListener('hashchange', routeAcademicPage);
+    routeAcademicPage();
+  </script>
+  <script>
+    const mpCanvas = document.querySelector('#spectrum');
+    const mpContext = mpCanvas.getContext('2d');
+    const mpSize = document.querySelector('#mp-size');
+    const mpRatio = document.querySelector('#ratio');
+    const mpSeed = Math.floor(Math.random() * 2 ** 32);
+    const mpInteger = new Intl.NumberFormat('en');
+    let mpState;
+    let mpFrame = 0;
+
+    function sizePlot(canvas, context) {
+      if (!context) return null;
+      const { width, height } = canvas.getBoundingClientRect();
+      if (!width || !height) return null;
+      const dpi = window.devicePixelRatio || 1;
+      const pixelWidth = Math.round(width * dpi);
+      const pixelHeight = Math.round(height * dpi);
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+      }
+      context.setTransform(dpi, 0, 0, dpi, 0, 0);
+      context.clearRect(0, 0, width, height);
+      return { width, height };
+    }
+
+    function spectrumRandom(seed) {
+      let state = seed | 0;
+      return () => {
+        state = (state + 0x6d2b79f5) | 0;
+        let bits = Math.imul(state ^ (state >>> 15), state | 1);
+        bits ^= bits + Math.imul(bits ^ (bits >>> 7), bits | 61);
+        return ((bits ^ (bits >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function chiSquare(degrees, uniform) {
+      // A chi-square variable is twice a unit-scale Gamma variable of shape df/2.
+      const normal = () => Math.sqrt(-2 * Math.log1p(-uniform())) * Math.cos(2 * Math.PI * uniform());
+      if (degrees === 1) return normal() ** 2;
+      const center = degrees / 2 - 1 / 3;
+      const scale = 1 / Math.sqrt(9 * center);
+      while (true) {
+        const z = normal();
+        const root = 1 + scale * z;
+        if (root <= 0) continue;
+        const volume = root ** 3;
+        if (Math.log1p(-uniform()) < z * z / 2 + center * (1 - volume + Math.log(volume))) {
+          return 2 * center * volume;
+        }
+      }
+    }
+
+    function laguerreTridiagonal(p, n, seed) {
+      const rank = Math.min(p, n);
+      const rows = Math.max(p, n);
+      const uniform = spectrumRandom(seed);
+      const diagonal = new Float64Array(rank);
+      const coupling = new Float64Array(rank - 1);
+      let subdiagonal = 0;
+
+      // The real Laguerre bidiagonal model has the Gaussian covariance spectrum in law.
+      for (let i = 0; i < rank; i += 1) {
+        const main = chiSquare(rows - i, uniform) / n;
+        diagonal[i] = main + subdiagonal;
+        if (i < rank - 1) {
+          subdiagonal = chiSquare(rank - i - 1, uniform) / n;
+          coupling[i] = Math.sqrt(main * subdiagonal);
+        }
+      }
+      return { diagonal, coupling };
+    }
+
+    function countEigenvaluesAtMost(diagonal, coupling, edge) {
+      // Count negative pivots of the shifted tridiagonal matrix.
+      const tiny = 1e-20;
+      let count = 0;
+      let pivot = diagonal[0] - edge;
+      for (let i = 0; i < diagonal.length; i += 1) {
+        if (i > 0) pivot = diagonal[i] - edge - coupling[i - 1] ** 2 / pivot;
+        if (Math.abs(pivot) < tiny) pivot = -tiny;
+        if (pivot < 0) count += 1;
+      }
+      return count;
+    }
+
+    function sampleDensity(p, n, upper) {
+      const { diagonal, coupling } = laguerreTridiagonal(p, n, mpSeed);
+      let bound = upper;
+      for (let i = 0; i < diagonal.length; i += 1) {
+        bound = Math.max(bound, diagonal[i] + (coupling[i - 1] ?? 0) + (coupling[i] ?? 0));
+      }
+      const xStep = bound <= 2.5 ? 0.5 : bound <= 5 ? 1 : bound <= 10 ? 2 : 5;
+      const xMax = xStep * Math.ceil(bound * 1.01 / xStep);
+      const binCount = 64;
+      const binWidth = xMax / binCount;
+      const bins = new Float64Array(binCount);
+      let previous = 0;
+      for (let i = 0; i < binCount; i += 1) {
+        const count = countEigenvaluesAtMost(diagonal, coupling, (i + 1) * binWidth);
+        bins[i] = (count - previous) / (p * binWidth);
+        previous = count;
+      }
+      return { bins, binWidth, xStep, xMax };
+    }
+
+    function mpDensity(x, gamma, lower, upper) {
+      if (x <= 0 || x <= lower || x >= upper) return 0;
+      return Math.sqrt((upper - x) * (x - lower)) / (2 * Math.PI * gamma * x);
+    }
+
+    function drawSpectrum() {
+      if (!mpState) return;
+      const area = sizePlot(mpCanvas, mpContext);
+      if (!area) return;
+      const { width, height } = area;
+      const { gamma, lower, upper, bins, binWidth, xStep, xMax, yMax } = mpState;
+      const ctx = mpContext;
+      const left = 43;
+      const right = width - 13;
+      const top = 12;
+      const bottom = height - 40;
+      const xPixel = x => left + (right - left) * x / xMax;
+      const yPixel = y => bottom - (bottom - top) * y / yMax;
+
+      ctx.font = '11px ui-monospace, monospace';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#c6bdc9';
+      ctx.strokeStyle = '#403744';
+      ctx.lineWidth = 1;
+      ctx.textAlign = 'right';
+      for (let i = 0; i <= 4; i += 1) {
+        const tick = yMax * i / 4;
+        const y = yPixel(tick);
+        ctx.beginPath();
+        ctx.moveTo(left, y);
+        ctx.lineTo(right, y);
+        ctx.stroke();
+        ctx.fillText(String(Number(tick.toFixed(2))), left - 6, y);
+      }
+      ctx.textAlign = 'center';
+      for (let x = 0; x <= xMax; x += xStep) {
+        const pixel = xPixel(x);
+        ctx.beginPath();
+        ctx.moveTo(pixel, top);
+        ctx.lineTo(pixel, bottom);
+        ctx.stroke();
+        ctx.fillText(String(x), pixel, bottom + 12);
+      }
+      ctx.fillText('Eigenvalue λ', (left + right) / 2, height - 9);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(left, top, right - left, bottom - top);
+      ctx.clip();
+      ctx.fillStyle = '#d4c9ee56';
+      const barWidth = (right - left) / bins.length;
+      for (let i = 0; i < bins.length; i += 1) {
+        const y = yPixel(bins[i]);
+        ctx.fillRect(xPixel(i * binWidth), y, Math.max(0, barWidth - 0.6), bottom - y);
+      }
+
+      const curve = new Path2D();
+      const steps = 500;
+      for (let i = 0; i <= steps; i += 1) {
+        const x = lower + (upper - lower) * (1 - Math.cos(Math.PI * i / steps)) / 2;
+        const density = i === 0 && gamma === 1 ? yMax * 2 : mpDensity(x, gamma, lower, upper);
+        if (i === 0) curve.moveTo(xPixel(x), yPixel(density));
+        else curve.lineTo(xPixel(x), yPixel(density));
+      }
+      const fill = new Path2D(curve);
+      fill.lineTo(xPixel(upper), bottom);
+      fill.lineTo(xPixel(lower), bottom);
+      fill.closePath();
+      ctx.fillStyle = '#a997ec24';
+      ctx.fill(fill);
+      ctx.strokeStyle = '#b4a4f0';
+      ctx.lineWidth = 2;
+      ctx.stroke(curve);
+      ctx.restore();
+    }
+
+    function updateSpectrum() {
+      const n = Number(mpSize.value);
+      const p = Math.round(n * Number(mpRatio.value));
+      const gamma = p / n;
+      const lower = (1 - Math.sqrt(gamma)) ** 2;
+      const upper = (1 + Math.sqrt(gamma)) ** 2;
+      const { bins, binWidth, xStep, xMax } = sampleDensity(p, n, upper);
+      const peak = mpDensity(2 * lower * upper / (lower + upper), gamma, lower, upper);
+      const yMax = Math.max(0.25, Math.ceil(4 * Math.max(Math.min(peak, 2.5), ...bins)) / 4);
+      mpState = { gamma, lower, upper, bins, binWidth, xStep, xMax, yMax };
+
+      const zeroCount = Math.max(0, p - n);
+      const zeroShare = (100 * zeroCount / p).toFixed(1) + '%';
+      const supportText = '[' + lower.toFixed(2) + ', ' + upper.toFixed(2) + ']';
+      document.querySelector('#mp-size-value').value = mpInteger.format(n);
+      document.querySelector('#ratio-value').value = gamma.toFixed(2);
+      document.querySelector('#mp-parameters').textContent = 'Dimension p = ' + mpInteger.format(p);
+      document.querySelector('#support').textContent = 'Continuous support ' + supportText;
+      document.querySelector('#mp-zero').textContent =
+        'Zero eigenvalues ' + mpInteger.format(zeroCount) + '/' + mpInteger.format(p) + ' (' + zeroShare + ')';
+      const clipNote = document.querySelector('#clip-note');
+      clipNote.hidden = gamma !== 1 && peak <= yMax;
+      clipNote.textContent = gamma === 1
+        ? 'The density diverges at zero. The plot clips this peak.'
+        : 'The density peak extends above the plot.';
+      mpCanvas.setAttribute('aria-label', 'Marchenko–Pastur density and simulated eigenvalue histogram at aspect ratio ' +
+        gamma.toFixed(2) + '. Continuous support ' + supportText + '. Zero eigenvalues ' + zeroShare + '.');
+      drawSpectrum();
+    }
+
+    function scheduleSpectrum() {
+      if (mpFrame) return;
+      mpFrame = requestAnimationFrame(() => {
+        mpFrame = 0;
+        updateSpectrum();
+      });
+    }
+
+    mpSize.addEventListener('input', scheduleSpectrum);
+    mpRatio.addEventListener('input', scheduleSpectrum);
+    updateSpectrum();
+    const mpObserver = new ResizeObserver(drawSpectrum);
+    mpObserver.observe(mpCanvas);
+  </script>
+  <script>
+    const ballCanvas = document.querySelector('#ball-space');
+    const ballView = { canvas: ballCanvas, context: ballCanvas.getContext('2d') };
+    const ballDimension = document.querySelector('#ball-dimension');
+    const ballThickness = document.querySelector('#ball-thickness');
+    const ballDimensionValue = document.querySelector('#ball-dimension-value');
+    const ballThicknessValue = document.querySelector('#ball-thickness-value');
+    const ballSpaceShare = document.querySelector('#ball-space-share');
+    const ballPercent = new Intl.NumberFormat('en', { style: 'percent', maximumFractionDigits: 1 });
+    const ballFullTurn = 2 * Math.PI;
+    let ballSamples = [];
+
+    function drawBallDisk(view, dimension, innerRadius) {
+      const { canvas, context } = view;
+      const area = sizePlot(canvas, context);
+      if (!area) return;
+      const { width, height } = area;
+      const x = width / 2;
+      const y = height / 2;
+      const radius = Math.min(width, height) * 0.46;
+      const boundary = new Path2D();
+      boundary.arc(x, y, radius, 0, ballFullTurn);
+      const core = new Path2D();
+      core.arc(x, y, radius * innerRadius, 0, ballFullTurn);
+
+      context.fillStyle = '#51342a';
+      context.fill(boundary);
+      const coreFill = context.createRadialGradient(x - 0.18 * radius, y - 0.24 * radius, 0, x, y, radius);
+      coreFill.addColorStop(0, '#392d49');
+      coreFill.addColorStop(1, '#241d31');
+      context.fillStyle = coreFill;
+      context.fill(core);
+
+      const inside = new Path2D();
+      const inShell = new Path2D();
+      const pointRadius = Math.max(0.74, Math.min(1.65, radius * 0.0125));
+      const exponent = 1 / dimension;
+      for (const point of ballSamples) {
+        // The radial CDF is r^d. Keep the sampled radius and reuse the illustrative angle.
+        const r = point.uniform ** exponent;
+        const px = x + r * radius * point.dx;
+        const py = y + r * radius * point.dy;
+        const dots = r >= innerRadius ? inShell : inside;
+        dots.moveTo(px + pointRadius, py);
+        dots.arc(px, py, pointRadius, 0, ballFullTurn);
+      }
+
+      context.save();
+      context.clip(boundary);
+      context.fillStyle = '#bba8ebce';
+      context.fill(inside);
+      context.fillStyle = '#ffd098e8';
+      context.fill(inShell);
+      context.restore();
+
+      context.lineWidth = 0.9;
+      if (radius * (1 - innerRadius) > 2) {
+        context.strokeStyle = '#e3a5779e';
+        context.setLineDash([3, 3]);
+        context.stroke(core);
+        context.setLineDash([]);
+      }
+      context.strokeStyle = '#efa878';
+      context.stroke(boundary);
+    }
+
+    function ballShellShare(dimension, thickness) {
+      const share = -Math.expm1(dimension * Math.log1p(-thickness));
+      return share > 0.999 ? '>99.9%' : ballPercent.format(share);
+    }
+
+    function drawBall() {
+      const innerRadius = 1 - Number(ballThickness.value) / 100;
+      drawBallDisk(ballView, Number(ballDimension.value), innerRadius);
+    }
+
+    function updateBallDemo() {
+      const dimension = Number(ballDimension.value);
+      const thickness = Number(ballThickness.value) / 100;
+      const thicknessLabel = ballPercent.format(thickness);
+      const spaceShare = ballShellShare(dimension, thickness);
+
+      ballDimensionValue.value = dimension;
+      ballThicknessValue.value = thicknessLabel;
+      ballThickness.setAttribute('aria-valuetext', ballThickness.value + ' percent');
+      ballSpaceShare.textContent = spaceShare;
+      ballCanvas.setAttribute('aria-label', 'Radial view of a ball in ' + dimension + ' dimensions. The outer ' + thicknessLabel + ' of the radius contains ' + spaceShare + ' of the volume.');
+      drawBall();
+    }
+
+    function resampleBall() {
+      ballSamples = Array.from({ length: 320 }, () => {
+        const angle = Math.random() * ballFullTurn;
+        return { uniform: Math.random(), dx: Math.cos(angle), dy: Math.sin(angle) };
+      });
+      updateBallDemo();
+    }
+
+    ballDimension.addEventListener('input', () => updateBallDemo());
+    ballThickness.addEventListener('input', () => updateBallDemo());
+    document.querySelector('#ball-resample').addEventListener('click', resampleBall);
+    resampleBall();
+    const ballViewObserver = new ResizeObserver(drawBall);
+    ballViewObserver.observe(ballCanvas);
+  </script>
+</body>
+</html>
